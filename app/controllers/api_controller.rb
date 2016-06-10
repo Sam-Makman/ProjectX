@@ -6,13 +6,20 @@ class ApiController < ApplicationController
     if @user
         render :json => {user: 'exists' , code: 1}
     else
-       render :json => {user: 'Does Not Exist' , code: 0}
+      #  render :json => {user: 'Does Not Exist' , code: 0}
+       unregistered
     end
   end
 
   def unregistered
-    @unregistered = UnregisteredDevice.new
-    @unregistered.device_id = params[:device_id]
+    @unregistered = UnregisteredDevice.create(device_id: params[:device_id] , unique_id: generate_code(10) )
+    if @unregistered
+      render :json => {registration_id: @unregistered[:unique_id],
+                        message: "Device is not Registered"}
+    else
+       render :json => {error: "ID does not exist"}
+    end
+  end
 
   def service
     @request = RequestedAction.create(request_params)
@@ -28,4 +35,10 @@ class ApiController < ApplicationController
   def request_params
     params.require(:request).permit(:device_id , :requested_service)
   end
+
+  def generate_code(number)
+    charset =  Array('a'..'z')
+    Array.new(number) { charset.sample }.join
+  end
+
 end
