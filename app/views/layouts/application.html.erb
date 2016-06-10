@@ -7,8 +7,28 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  <div class="page-header">
+<%= render 'layouts/header' %>
+</div>
+<div class="container">
+<% if !flash[:success].nil? %>
+  <div class="alert alert-success">
+    <%= flash[:success]  %>
+  </div>
+<% end %>
+<% if !flash[:warning].nil? %>
+    <div class="alert alert-warning">
+      <%= flash[:warning]  %>
+    </div>
+<% end %>
+<% if !flash[:error].nil? %>
+    <div class="alert alert-danger">
+      <%= flash[:error]  %>
+    </div>
+<% end %>
+</div>
 <%= yield %>
 
+<%= render 'layouts/footer' %>
 </body>
 </html>

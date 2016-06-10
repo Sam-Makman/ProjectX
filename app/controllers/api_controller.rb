@@ -6,7 +6,6 @@ class ApiController < ApplicationController
     if @user
         render :json => {user: 'exists' , code: 1}
     else
-      #  render :json => {user: 'Does Not Exist' , code: 0}
        unregistered
     end
   end
