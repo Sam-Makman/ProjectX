@@ -1,6 +1,9 @@
 class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
+ # get
+ # /api/lookup
+ # params device_id
   def lookup
     @user = User.find_by( device_id: params[:device_id])
     if @user
@@ -10,6 +13,10 @@ class ApiController < ApplicationController
     end
   end
 
+  # get
+  # /api/unregistered
+  # params device_id
+  # returns unique_id
   def unregistered
     @unregistered = UnregisteredDevice.create(device_id: params[:device_id] , unique_id: generate_code(10) )
     if @unregistered
@@ -20,6 +27,10 @@ class ApiController < ApplicationController
     end
   end
 
+  # post
+  # api/service
+  # params device_id , requested_service
+  # returns success 
   def service
     @request = RequestedAction.create(request_params)
     if @request

@@ -1,10 +1,8 @@
-require "#{Rails.root}/app/view_models/registration.rb"
 class UserController < ApplicationController
 
 def new
   @user = User.new
 end
-
 
 def create
   @unreg = UnregisteredDevice.find_by(unique_id: params[:unique_id])
