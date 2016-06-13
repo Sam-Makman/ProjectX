@@ -1,13 +1,13 @@
-<h1>API </h1>
+#API
 
-<h5>get  api/lookup</h5>
-<h5>param device_id</h5>
-<p>checks to see if the device id has been registered with our service if not it routs to api/unregistered and creates a new registration token </p>
+######get  api/lookup
+#####param device_id<
+checks to see if the device id has been registered with our service if not it routs to api/unregistered and creates a new registration token
 
-<h5>get api/unregisted</h5>
-<h5>params device_id</h5>
-<p>returns a registration token (unique_id) this token is used on our website to match a device with an account </p>
+######get api/unregisted
+######params device_id
+returns a registration token (unique_id) this token is used on our website to match a device with an account
 
-<h5>get api/service</h5>
-<h5>params device_id , requested_service</h5>
-<p>registers a requested service to a device. returns the success of the operation.  </p>
+#####get api/service
+#####params device_id , requested_service
+registers a requested service to a device. returns the success of the operation.
