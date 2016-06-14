@@ -7,5 +7,6 @@ post 'api/service'
 get 'api/unregistered'
 get 'user/new'
 post'user/create'
+get 'api/regcode'
 
 end
