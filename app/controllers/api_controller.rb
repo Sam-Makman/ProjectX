@@ -11,7 +11,7 @@ class ApiController < ApplicationController
     else
        unregistered
     end
-  enda
+  end
 
   # get
   # /api/unregistered
