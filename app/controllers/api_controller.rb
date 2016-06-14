@@ -11,7 +11,7 @@ class ApiController < ApplicationController
     else
        unregistered
     end
-  end
+  enda
 
   # get
   # /api/unregistered
@@ -27,10 +27,27 @@ class ApiController < ApplicationController
     end
   end
 
+ # get
+ # api/regcode
+ #params device_id
+ # returns unique_id
+
+ def regcode
+   @unreg = UnregisteredDevice.find_by(device_id: params[:device_id])
+   if @unreg
+     render :json => {registration_id: @unreg[:unique_id],
+                      registered: @unreg[:actice]}
+   else
+     unregistered
+   end
+
+ end
+
+
   # post
   # api/service
   # params device_id , requested_service
-  # returns success 
+  # returns success
   def service
     @request = RequestedAction.create(request_params)
     if @request
