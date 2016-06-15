@@ -44,12 +44,12 @@ class ApiController < ApplicationController
  end
 
 
-  # post
+  # get
   # api/service
   # params device_id , requested_service
   # returns success
   def service
-    @request = RequestedAction.create(request_params)
+    @request = RequestedAction.create(device_id: params[:device_id], requested_service: "Help")
     if @request
           render :json => {sucess: 'true' , code: 1}
     else
