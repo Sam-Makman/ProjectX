@@ -9,7 +9,7 @@ class ApiController < ApplicationController
     if @user
         render :json => {user: 'exists' , code: 1}
     else
-       unregistered
+       regcode
     end
   end
 

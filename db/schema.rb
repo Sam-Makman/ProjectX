@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610184719) do
+ActiveRecord::Schema.define(version: 20160615164435) do
 
   create_table "requested_actions", force: :cascade do |t|
     t.string   "device_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160610184719) do
     t.datetime "updated_at",                 null: false
     t.string   "device_id"
     t.string   "unique_id"
-    t.boolean  "active",     default: false
+    t.boolean  "active",     default: false, null: false
   end
 
   create_table "users", force: :cascade do |t|
