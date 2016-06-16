@@ -48,12 +48,18 @@ class ApiController < ApplicationController
   # api/service
   # params device_id , requested_service
   # returns success
+  # fix this
   def service
-    @request = RequestedAction.create(device_id: params[:device_id], requested_service: "Help")
-    if @request
+    @user = User.find_by( device_id: params[:device_id])
+    if @user
+      @request = RequestedAction.create(device_id: params[:device_id], requested_service: "Help")
+      if @request
           render :json => {sucess: 'true' , code: 1}
-    else
+      else
           render :json => {sucess: 'false' , code: 0}
+      end
+    else
+      regcode
     end
   end
 
