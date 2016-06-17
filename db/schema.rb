@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615164435) do
+ActiveRecord::Schema.define(version: 20160617202339) do
 
   create_table "requested_actions", force: :cascade do |t|
     t.string   "device_id"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20160615164435) do
     t.boolean  "active",     default: false, null: false
   end
 
+  add_index "unregistered_devices", ["device_id"], name: "index_unregistered_devices_on_device_id", unique: true
+
   create_table "users", force: :cascade do |t|
     t.string   "device_id"
     t.string   "email"
@@ -35,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160615164435) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "users", ["device_id"], name: "index_users_on_device_id", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
 
 end

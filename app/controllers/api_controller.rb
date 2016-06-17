@@ -36,7 +36,7 @@ class ApiController < ApplicationController
    @unreg = UnregisteredDevice.find_by(device_id: params[:device_id])
    if @unreg
      render :json => {registration_id: @unreg[:unique_id],
-                      registered: @unreg[:actice]}
+                      registered: @unreg[:active]}
    else
      unregistered
    end
