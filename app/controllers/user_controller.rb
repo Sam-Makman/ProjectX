@@ -7,7 +7,7 @@ end
 def create
 
   @device = UnregisteredDevice.find_by(unique_id: params[:unique_id])
-  if @device[:active]
+  if @device && @device[:active]
     flash[:error] = "This Device already has been registered"
     redirect_to root_path
   else
