@@ -6,6 +6,11 @@ end
 
 def create
 
+#   if params[:unique_id].nil?
+#     flash[:error] = "please enter a unique id"
+#     redirect_to root_path
+#
+# else
   @device = UnregisteredDevice.find_by(unique_id: params[:unique_id].downcase)
   if @device && @device[:active]
     flash[:error] = "This Device already has been registered"
@@ -30,6 +35,7 @@ def create
       redirect_to root_path
     end
   end
+# end
 end
 
 private
