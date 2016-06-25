@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
-root "user#new"
+root "users#new"
 
 get 'api/lookup'
 get 'api/service'
 get 'api/unregistered'
-get 'user/new'
-post'user/create'
+get 'users/new'
+post'users', to: "users#create"
 get 'api/regcode'
 
 end
