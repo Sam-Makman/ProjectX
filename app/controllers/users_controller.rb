@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
 def index
-  
+
 end
 
 def new
@@ -25,6 +25,7 @@ def create
       @user =  User.new(email: params[:email], device_id: @unreg[:device_id])
       if @user.save
           @unreg.update_column(:active, true)
+          redirect_to caregivers_path
         render 'success'
       else
         if User.find_by( email: params[:email] )
