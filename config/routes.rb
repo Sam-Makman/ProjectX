@@ -9,4 +9,7 @@ get 'users/new'
 post'users', to: "users#create"
 get 'api/regcode'
 
+get 'caregivers', to: 'caregivers#new'
+post 'caregivers', to: 'caregivers#create'
+
 end

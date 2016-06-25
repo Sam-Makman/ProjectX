@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+def index
+  
+end
+
 def new
   @user = User.new
 end
@@ -18,8 +22,7 @@ def create
   else
     @unreg = UnregisteredDevice.find_by(unique_id: params[:unique_id].downcase)
     if @unreg
-      @user =  User.new(email: params[:email], first_name: params[:first_name], last_name: params[:last_name],
-      home_phone: params[:home_phone], cell_phone: params[:cell_phone], device_id: @unreg[:device_id])
+      @user =  User.new(email: params[:email], device_id: @unreg[:device_id])
       if @user.save
           @unreg.update_column(:active, true)
         render 'success'
@@ -42,6 +45,6 @@ end
 private
 
   def reg_params
-    params.permit(:email, :first_name, :last_name, :home_phone, :cell_phone, :unique_id)
+    params.permit(:email, :unique_id)
   end
 end

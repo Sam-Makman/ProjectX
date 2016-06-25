@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
   validates :home_phone, format: { with:VALID_PHONENUMBER_REGEX }
   validates :cell_phone, format: { with:VALID_PHONENUMBER_REGEX }
+  has_many :caregivers, dependant: :destory
 end
