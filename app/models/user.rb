@@ -8,4 +8,6 @@ class User < ActiveRecord::Base
   validates :home_phone, format: { with:VALID_PHONENUMBER_REGEX }
   validates :cell_phone, format: { with:VALID_PHONENUMBER_REGEX }
   has_many :caregivers, dependent: :destroy
+  has_secure_password
+  validates :password, length: { minimum: 6 }
 end

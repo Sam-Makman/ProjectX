@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624174427) do
+ActiveRecord::Schema.define(version: 20160627172542) do
 
   create_table "caregivers", force: :cascade do |t|
     t.string   "first_name"
@@ -41,12 +41,13 @@ ActiveRecord::Schema.define(version: 20160624174427) do
   create_table "users", force: :cascade do |t|
     t.string   "device_id"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "home_phone"
     t.string   "cell_phone"
+    t.string   "password_digest"
   end
 
   add_index "users", ["device_id"], name: "index_users_on_device_id", unique: true
