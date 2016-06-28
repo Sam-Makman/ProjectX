@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20160628192502) do
     t.string   "phone_number"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "users_id"
+    t.integer  "user_id"
   end
 
-  add_index "caregivers", ["users_id"], name: "index_caregivers_on_users_id"
+  add_index "caregivers", ["user_id"], name: "index_caregivers_on_user_id"
 
   create_table "requested_actions", force: :cascade do |t|
     t.string   "device_id"

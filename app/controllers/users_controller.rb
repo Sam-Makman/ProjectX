@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 def index
 end
 
+
 def new
   if logged_in?
     redirect_to caregivers_path
@@ -22,7 +23,7 @@ def create
     else
       @user = User.new(reg_params)
       @user[:device_id] = @device[:device_id]
-      if @user.save
+      if @user.save!
           @device.update_column(:active, true)
           redirect_to caregivers_path
       else

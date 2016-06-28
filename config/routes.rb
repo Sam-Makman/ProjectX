@@ -12,8 +12,6 @@ get    'login'   => 'sessions#new'
 post   'login'   => 'sessions#create'
 delete 'logout'  => 'sessions#destroy'
 
-get 'caregivers' => 'caregivers#index'
-get 'caregivers/new' => 'caregivers#new'
-post 'caregivers/new' => 'caregivers#create'
 
+resources :caregivers
 end

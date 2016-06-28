@@ -1,6 +1,7 @@
-<h1> Caregivers </h1>
 
-<table>
+<div class="col-md-6 col-md-offset-3">
+<h1> Caregivers </h1>
+<table class="table">
   <thead>
     <tr>
       <th>
@@ -13,5 +14,26 @@
         Phone Number
       </th>
     </tr>
+  </thead>
+  <tbody>
+    <% @caregivers.each do |caregiver| %>
+    <tr>
+      <td>
+          <%= caregiver.first_name %>
+      </td>
+      <td>
+          <%= caregiver.last_name %>
+      </td>
+      <td>
+          <%= caregiver.phone_number %>
+      </td>
+      <td><%= link_to 'Edit', edit_caregiver_path(caregiver) %></td>
+      <td>
+          <%= link_to 'Delete', caregiver, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+    <% end %>
 
+  </tbody>
 </table>
+</div>
