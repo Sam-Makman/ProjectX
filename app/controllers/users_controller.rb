@@ -1,10 +1,16 @@
 class UsersController < ApplicationController
 
+#what is this for?
+#probably needs to be deleted
 def index
 end
 
 def new
-  @user = User.new
+  if logged_in?
+    redirect_to caregivers_path
+  else
+    @user = User.new
+  end
 end
 
 def create
