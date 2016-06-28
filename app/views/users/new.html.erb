@@ -4,7 +4,7 @@
   <div class="col-md-6 col-md-offset-3">
     <h1>Sign up</h1>
     <%= form_for(@user) do |f| %>
-
+      <%= render 'shared/error_messages' %>
 
         <%= f.label :first_name %>
         <%= f.text_field :first_name, class: 'form-control' %>
@@ -22,9 +22,16 @@
         <%= f.telephone_field :cell_phone, class: 'form-control' %>
 
         <div class="field">
-          <label for="unique_id"> Registration ID</label>
+          <label for="unique_id"> Registration Code</label>
           <input class="form-control" type="text" name="unique_id" id="unique_id"/>
         </div>
+
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+
+        <%= f.label :password_confirmation, "Confirmation" %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+
 
         <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
