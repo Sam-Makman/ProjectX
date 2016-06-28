@@ -9,11 +9,11 @@ end
 
 def create
   @device = UnregisteredDevice.find_by(unique_id: params[:unique_id].downcase)
-  if @device && @device[:active]
-    flash[:error] = "This Device already has been registered"
-    render 'new'
-  else
-    if @device
+  if @device
+    if@device[:active]
+      flash[:error] = "This Device already has been registered"
+      render 'new'
+    else
       @user = User.new(reg_params)
       @user[:device_id] = @device[:device_id]
       if @user.save
@@ -23,6 +23,9 @@ def create
         render 'new'
       end
     end
+  else
+    flash[:error] = "Invalid Registration Code"
+    render 'new'
   end
 end
 
