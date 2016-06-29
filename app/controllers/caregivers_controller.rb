@@ -1,6 +1,7 @@
 class CaregiversController < ApplicationController
   before_action :require_login
-
+  before_action :correct_user,   only: [:edit, :update, :destroy]
+  
   def index
     @caregivers = current_user.caregivers.all
   end
@@ -36,7 +37,9 @@ class CaregiversController < ApplicationController
   end
 
   def destroy
-    redirect_to caregivers_path
+      @caregiver = Caregiver.find(params[:id])
+      @caregiver.destroy
+      redirect_to caregivers_path
   end
 
   private
@@ -49,6 +52,11 @@ class CaregiversController < ApplicationController
 
   def caregiver_params
       params.require(:caregiver).permit(:first_name, :last_name, :phone_number)
+  end
+
+  def correct_user
+    @caregiver = current_user.caregivers.find_by(id: params[:id])
+    redirect_to root_url if @caregiver.nil?
   end
 
 end
