@@ -1,7 +1,7 @@
 class CaregiversController < ApplicationController
   before_action :require_login
   before_action :correct_user,   only: [:edit, :update, :destroy]
-  
+
   def index
     @caregivers = current_user.caregivers.all
   end
@@ -11,11 +11,16 @@ class CaregiversController < ApplicationController
   end
 
   def create
-    @caregiver = current_user.caregivers.build(caregiver_params)
-    if @caregiver.save
+    if current_user.caregivers.length >= 4
+      flash[:error] = "You can only register up to 4 caregivers"
       redirect_to caregivers_path
     else
-      render 'new'
+      @caregiver = current_user.caregivers.build(caregiver_params)
+      if @caregiver.save
+        redirect_to caregivers_path
+      else
+        render 'new'
+      end
     end
   end
 
