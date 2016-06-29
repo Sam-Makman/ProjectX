@@ -10,15 +10,9 @@ get 'users/new'
 post'users', to: "users#create"
 get 'api/regcode'
 
-<<<<<<< HEAD
-get 'login', to: 'sessions#new'
-post 'login', to: 'sessions#create'
-delete 'logout', to: 'sessions#destroy'
-=======
 get    'login'   => 'sessions#new'
 post   'login'   => 'sessions#create'
 delete 'logout'  => 'sessions#destroy'
->>>>>>> sam
 
 get 'caregivers', to: 'caregivers#new'
 post 'caregivers', to: 'caregivers#create'
