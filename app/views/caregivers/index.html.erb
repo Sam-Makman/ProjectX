@@ -55,7 +55,11 @@
 
   </tbody>
 </table>
-
-<%= link_to 'Add new', new_caregiver_path %>
+<% if current_user.caregivers.length == 0 %>
+  <p> You need to have at least one caregiver registered </p>
+<% end %>
+<% if current_user.caregivers.length < 4 %>
+  <%= link_to 'Add new', new_caregiver_path %>
+<% end %>
 </div>
 </div>
