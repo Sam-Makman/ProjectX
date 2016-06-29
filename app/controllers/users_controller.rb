@@ -1,51 +1,45 @@
 class UsersController < ApplicationController
 
+#what is this for?
+#probably needs to be deleted
 def index
-  
 end
 
+
 def new
-  @user = User.new
+  if logged_in?
+    redirect_to caregivers_path
+  else
+    @user = User.new
+  end
 end
 
 def create
-
-#   if params[:unique_id].nil?
-#     flash[:error] = "please enter a unique id"
-#     redirect_to root_path
-#
-# else
   @device = UnregisteredDevice.find_by(unique_id: params[:unique_id].downcase)
-  if @device && @device[:active]
-    flash[:error] = "This Device already has been registered"
-    redirect_to root_path
-  else
-    @unreg = UnregisteredDevice.find_by(unique_id: params[:unique_id].downcase)
-    if @unreg
-      @user =  User.new(email: params[:email], device_id: @unreg[:device_id])
-      if @user.save
-          @unreg.update_column(:active, true)
-          redirect_to caregivers_path
-        render 'success'
-      else
-        if User.find_by( email: params[:email] )
-          flash[:error] = "Email Already Registered"
-        else
-        flash[:error] = "Invalid Email"
-        end
-        redirect_to root_path
-      end
+  if @device
+    if@device[:active]
+      flash[:error] = "This Device already has been registered"
+      render 'new'
     else
-      flash[:error] = "Invalid Registration Code"
-      redirect_to root_path
+      @user = User.new(reg_params)
+      @user[:device_id] = @device[:device_id]
+      if @user.save!
+          @device.update_column(:active, true)
+          redirect_to caregivers_path
+      else
+        render 'new'
+      end
     end
+  else
+    flash[:error] = "Invalid Registration Code"
+    render 'new'
   end
-# end
 end
 
 private
 
   def reg_params
-    params.permit(:email, :unique_id)
+    params.require(:user).permit(:email, :first_name, :last_name, :home_phone, :cell_phone,
+                      :password, :password_confirmation )
   end
 end

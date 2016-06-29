@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  VALID_PHONENUMBER_REGEX = /\A[2-9]\d{2}-\d{3}-\d{4}\z/i
+  VALID_PHONENUMBER_REGEX = /\A\d{3}-\d{3}-\d{4}\z/i
   attr_accessor :remember_token
   validates :email, presence: true, length: { maximum: 255 },
           format: { with: VALID_EMAIL_REGEX }, uniqueness: {case_sensitive: false}
@@ -35,4 +35,5 @@ class User < ActiveRecord::Base
     return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
+
 end

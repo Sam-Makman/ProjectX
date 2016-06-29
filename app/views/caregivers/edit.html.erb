@@ -1,8 +1,8 @@
 <div class="col-md-6 col-md-offset-3">
-  <h1> New Caregiver <h1>
+  <h1> Edit <%= @caregiver.first_name %> <%= @caregiver.last_name%> </h1>
 <%= form_for(@caregiver) do |f| %>
-  <%= render 'caregivers/error_messages' %>
 
+  <%= render 'caregivers/error_messages' %>
   <%= f.label :first_name %>
   <%= f.text_field :first_name, class: 'form-control' %>
 
@@ -15,7 +15,7 @@
     <p> This phone must be capable of receiving text messages </p>
     <%= f.telephone_field :phone_number, class: 'form-control' %>
 
-    <%= f.submit "Add Caregiver", class: "btn btn-primary" %>
+    <%= f.submit "Save Changes", class: "btn btn-primary" %>
 <% end %>
 
 </div>
