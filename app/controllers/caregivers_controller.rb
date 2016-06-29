@@ -23,14 +23,19 @@ class CaregiversController < ApplicationController
   end
 
   def edit
-    redirect_to caregivers_path
+    @caregiver = Caregiver.find(params[:id])
   end
 
   def update
-    redirect_to caregivers_path
+    @caregiver = Caregiver.find(params[:id])
+    if @caregiver.update(caregiver_params)
+      redirect_to caregivers_path
+    else
+      render :edit
+    end
   end
 
-  def delete
+  def destroy
     redirect_to caregivers_path
   end
 
