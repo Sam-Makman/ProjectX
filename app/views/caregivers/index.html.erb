@@ -1,6 +1,25 @@
 
 <div class="col-md-6 col-md-offset-3">
-<h1> Caregivers </h1>
+
+  <h1> Welcome <%= current_user.first_name %> </h1>
+  <div class="col-md-6">
+    <h3> Personal Information </h3>
+    <ul>
+      <li> First Name: <%= current_user.first_name %>
+      </li>
+      <li> Last Name: <%= current_user.last_name %>
+      </li>
+      <li> Email: <%= current_user.email %>
+      </li>
+      <li> Cell Phone: <%= current_user.cell_phone %>
+      </li>
+      <li> Home Phone: <%= current_user.home_phone %>
+      </li>
+    </ul>
+    <p class="btn btn-primary">Edit Information </p>
+  </div>
+    <div class="col-md-6">
+      <h3> Caregivers </h3>
 <table class="table">
   <thead>
     <tr>
@@ -36,4 +55,7 @@
 
   </tbody>
 </table>
+
+<%= link_to 'Add new', new_caregiver_path %>
+</div>
 </div>
