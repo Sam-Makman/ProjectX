@@ -15,9 +15,8 @@ class UserMailer < ApplicationMailer
   #
   #   en.user_mailer.passowrd_reset.subject
   #
-  def passowrd_reset
-    @greeting = "Reset your password here!"
-
-    mail to: current_user.email
+  def password_reset
+    @user = user
+    mail to: user.email, subject: "Password reset"
   end
 end
