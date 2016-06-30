@@ -19,12 +19,15 @@ def create
   if @device
     if@device[:active]
       flash[:error] = "This Device already has been registered"
-      render 'new'
+      redirect_to root_path
     else
       @user = User.new(reg_params)
       @user[:device_id] = @device[:device_id]
       if @user.save
           @device.update_column(:active, true)
+          log_in(@user)
+          UserMailer.account_activation(@user).deliver_now
+          flash[:info] = "Please check your email to activate your account!"
           redirect_to caregivers_path
       else
         render 'new'
@@ -42,4 +45,6 @@ private
     params.require(:user).permit(:email, :first_name, :last_name, :home_phone, :cell_phone,
                       :password, :password_confirmation )
   end
+
+
 end
