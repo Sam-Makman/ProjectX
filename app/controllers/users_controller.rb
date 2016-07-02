@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 #what is this for?
 #probably needs to be deleted
 def index
+  redirect_to root_path
 end
 
 
