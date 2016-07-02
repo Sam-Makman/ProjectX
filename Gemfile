@@ -31,6 +31,9 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'puma'
 group :development, :test do
+  #opens email in browser, for testing mailers
+  gem "letter_opener"
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 end

@@ -15,6 +15,8 @@ get    'login'   => 'sessions#new'
 post   'login'   => 'sessions#create'
 delete 'logout'  => 'sessions#destroy'
 
+patch 'users/edit/:id' => 'users#update'
+
 resources :caregivers
 resources :users
 resources :account_activations, only: [:edit]

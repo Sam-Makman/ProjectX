@@ -12,8 +12,7 @@ class User < ActiveRecord::Base
   validates :cell_phone, format: { with:VALID_PHONENUMBER_REGEX }
   has_many :caregivers, dependent: :destroy
   has_secure_password
-  validates :password, length: { minimum: 6 }
-
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   # Returns the hash digest of the given string.
    def User.digest(string)
      cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -59,5 +58,11 @@ class User < ActiveRecord::Base
     def send_password_reset_email
       UserMailer.password_reset(self).deliver_now
     end
+
+    # Activates an account.
+  def activate
+    update_attribute(:activated,    true)
+    update_attribute(:activated_at, Time.zone.now)
+  end
 
 end
