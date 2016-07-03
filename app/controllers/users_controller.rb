@@ -1,11 +1,8 @@
 class UsersController < ApplicationController
 
-#what is this for?
-#probably needs to be deleted
 def index
   redirect_to root_path
 end
-
 
 def new
   if logged_in?
@@ -17,12 +14,13 @@ end
 
 def create
   @device = UnregisteredDevice.find_by(unique_id: params[:unique_id].downcase)
+  @user = User.new(reg_params)
   if @device
     if@device[:active]
       flash[:error] = "This Device already has been registered"
       redirect_to root_path
     else
-      @user = User.new(reg_params)
+
       @user[:device_id] = @device[:device_id]
       if @user.save
           @device.update_column(:active, true)
