@@ -1,6 +1,3 @@
-
-<div class="col-md-6 col-md-offset-3">
-
   <h1> Welcome <%= current_user.first_name %> </h1>
   <div class="col-md-6">
     <h3> Personal Information </h3>
@@ -61,5 +58,4 @@
 <% if current_user.caregivers.length < 4 %>
   <%= link_to 'Add new', new_caregiver_path %>
 <% end %>
-</div>
 </div>
