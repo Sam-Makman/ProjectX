@@ -48,7 +48,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  Rails.application.routes.default_url_options[:host] = 'https://evening-plains-33058.herokuapp.com'
+  Rails.application.routes.default_url_options[:host] = 'https://callmyguardian.com'
 
 
   config.action_mailer.delivery_method = :smtp
@@ -57,7 +57,7 @@ Rails.application.configure do
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'https://evening-plains-33058.herokuapp.com', #eg: 'yourappname.herokuapp.com'
+    :domain         => 'https://callmyguardian.com', #eg: 'yourappname.herokuapp.com'
     :authentication => :plain,
   }
 end
