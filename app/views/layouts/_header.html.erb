@@ -4,7 +4,14 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Log out", logout_path, method: :delete %></li>
+
+        <li>
+          <% if logged_in? %>
+          <%= link_to "Log out", logout_path, method: :delete %>
+          <% else %>
+          <%= link_to "Log in", login_path, method: :delete %>
+          <% end %>
+        </li>
 
       </ul>
     </nav>
