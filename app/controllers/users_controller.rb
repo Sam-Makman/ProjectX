@@ -23,7 +23,7 @@ def create
 
       @user[:device_id] = @device[:device_id]
       if @user.save
-          @device.update_column(:active, true)
+          @device.delete
           log_in(@user)
           UserMailer.account_activation(@user).deliver_now
           flash[:info] = "Please check your email to activate your account!"
