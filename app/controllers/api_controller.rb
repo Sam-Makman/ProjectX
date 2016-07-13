@@ -8,7 +8,7 @@ class ApiController < ApplicationController
   def lookup
     @user = User.find_by( device_id: params[:device_id])
     if @user
-        render :json => {user: 'exists' , code: 1}
+        render :json => {sucess: 'true' , message:'user exists'}
     else
        regcode
     end
@@ -21,10 +21,14 @@ class ApiController < ApplicationController
   def unregistered
     @unregistered = UnregisteredDevice.create(device_id: params[:device_id] , unique_id: generate_code(10))
     if @unregistered
-      render :json => {registration_id: @unregistered[:unique_id],
-                        message: "Device is not Registered"}
+      render :json => { sucess: 'true',
+        message: "Device is not Registered",
+        data:{
+          registration_id: @unregistered[:unique_id]
+              }
+          }
     else
-       render :json => {status: "500", error: "ID does not exist"}
+       render :json => {sucess: "false", error: "server error"}
     end
   end
 
@@ -36,8 +40,12 @@ class ApiController < ApplicationController
  def regcode
    @unreg = UnregisteredDevice.find_by(device_id: params[:device_id])
    if @unreg
-     render :json => {registration_id: @unreg[:unique_id],
-                      registered: @unreg[:active]}
+     render :json => { sucess: 'true',
+       message: "Device is not Registered",
+       data:{registration_id: @unreg[:unique_id],
+                      registered: @unreg[:active]
+            }
+          }
    else
      unregistered
    end
@@ -54,10 +62,15 @@ class ApiController < ApplicationController
     @user = User.find_by( device_id: params[:device_id])
     if @user
       @request = RequestedAction.create(device_id: params[:device_id], requested_service: "Help")
-      if @request
-          render :json => {sucess: 'true' , code: 1}
+      if @user.caregivers.size == 0
+            render :json => {sucess: 'false' ,
+                              message: 'no careivers registered'}
+      elsif @request
+          render :json => {sucess: 'true' ,
+                            message: 'request processed'}
       else
-          render :json => {sucess: 'false' , code: 0}
+          render :json => {sucess: 'false' ,
+                            error: 'request failed'}
       end
     else
       regcode
