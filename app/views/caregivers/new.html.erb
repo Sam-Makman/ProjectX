@@ -1,4 +1,4 @@
-  <h1> New Caregiver </h1>
+  <h1> New Emergency Contacts </h1>
 <%= form_for(@caregiver) do |f| %>
   <%= render 'caregivers/error_messages' %>
 
@@ -14,5 +14,5 @@
     <p> This phone must be capable of receiving text messages </p>
     <%= f.telephone_field :phone_number, class: 'form-control' %>
 
-    <%= f.submit "Add Caregiver", class: "btn btn-primary" %>
+    <%= f.submit "Add Emergency Contact", class: "btn btn-primary" %>
 <% end %>
