@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160630030152) do
+ActiveRecord::Schema.define(version: 20160728035323) do
 
   create_table "caregivers", force: :cascade do |t|
     t.string   "first_name"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20160630030152) do
     t.datetime "activated_at"
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
+    t.string   "title"
   end
 
   add_index "users", ["device_id"], name: "index_users_on_device_id", unique: true

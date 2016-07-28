@@ -55,7 +55,7 @@ end
 private
 
   def reg_params
-    params.require(:user).permit(:email, :first_name, :last_name, :home_phone, :cell_phone,
+    params.require(:user).permit(:email, :title, :first_name, :last_name, :home_phone, :cell_phone,
                       :password, :password_confirmation )
   end
 
