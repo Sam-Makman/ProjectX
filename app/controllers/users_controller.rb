@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :correct_user,   only: [:edit, :update]
+
 
 def index
   redirect_to root_path
