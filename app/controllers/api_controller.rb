@@ -57,11 +57,11 @@ class ApiController < ApplicationController
   # api/service
   # params device_id , requested_service
   # returns success
-  # fix this
+  # this will also need to send sms 
   def service
     @user = User.find_by( device_id: params[:device_id])
     if @user
-      @request = RequestedAction.create(device_id: params[:device_id], requested_service: "Help")
+      @request = RequestedAction.create(device_id: params[:device_id], requested_service: params[:message])
       if @user.caregivers.size == 0
             render :json => {sucess: 'false' ,
                               message: 'no careivers registered'}
