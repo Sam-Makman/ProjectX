@@ -12,6 +12,7 @@
 
     <%= f.label :phone_number %>
     <p> This phone must be capable of receiving text messages </p>
+    <p> Please use no spaces or special characters </p>
     <%= f.telephone_field :phone_number, class: 'form-control' %>
 
     <%= f.submit "Add Emergency Contact", class: "btn btn-primary" %>

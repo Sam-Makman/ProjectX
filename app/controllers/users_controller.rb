@@ -61,5 +61,10 @@ private
                       :password, :password_confirmation )
   end
 
+  def correct_user
+    if current_user.id != params[:id]
+      redirect_to root_url
+    end
+  end
 
 end
