@@ -15,11 +15,4 @@
 /log/*
 !/log/.keep
 /tmp
-
-# Ignore enviromental variables
-/config/local_env.yml
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+.byebug_history
