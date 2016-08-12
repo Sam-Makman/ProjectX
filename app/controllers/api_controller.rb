@@ -110,6 +110,7 @@ class ApiController < ApplicationController
 
     response = http.request(request, data.to_json)
     body = JSON.parse(response.body)
+    puts body
     return body['access_token']
 
   end
@@ -133,6 +134,7 @@ class ApiController < ApplicationController
 
         json["to"].push({ "phoneNumber" => "1" + cargiver.phone_number.to_s})
         response = http.request(request, json.to_json)
+        puts response
         # if response.status != 200
         #   raise "invalid request"
         # end
