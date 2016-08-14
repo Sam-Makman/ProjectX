@@ -67,9 +67,15 @@ class ApiController < ApplicationController
             render :json => {sucess: 'false' ,
                               message: 'no careivers registered'}
       elsif @request
-          send_message
-          render :json => {sucess: 'true' ,
-                            message: 'request processed'}
+          success = send_message
+          if success
+            render :json => {sucess: 'true' ,
+                              message: 'request processed'}
+          else
+            render :json => {sucess: 'false' ,
+                              message: 'message failed to send'}
+          end
+
       else
           render :json => {sucess: 'false' ,
                             error: 'request failed'}
@@ -97,7 +103,6 @@ class ApiController < ApplicationController
 
     request = Net::HTTP::Post.new(url.path)
 
-    # data = 'grant_type=password&username=+12679304026&password=Purav2016~&extension=101&refresh_token_ttl=-1'
     data = {
       grant_type: 'password',
       username: ENV['RINGCENTRAL_LOGIN'],
@@ -109,38 +114,44 @@ class ApiController < ApplicationController
     request.add_field('Content-Type','application/x-www-form-urlencoded;charset=UTF-8')
 
     response = http.request(request, data.to_json)
-    body = JSON.parse(response.body)
-    puts body
-    return body['access_token']
+    if response.code == 200
+      return body['access_token']
+    else
+      return false
+    end
 
   end
 
   def send_message
     token = get_token
-    url = URI.parse(ENV['RINGCENTRAL_PATH'] + '/restapi/v1.0/account/~/extension/~/sms')
+    if token
+      url = URI.parse(ENV['RINGCENTRAL_PATH'] + '/restapi/v1.0/account/~/extension/~/sms')
 
-    @user = User.find_by(device_id: params[:device_id])
-    if @user
-      @user.caregivers.each do |cargiver|
-        http = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = true
+      @user = User.find_by(device_id: params[:device_id])
+      if @user
+        @user.caregivers.each do |cargiver|
+          http = Net::HTTP.new(url.host, url.port)
+          http.use_ssl = true
 
-        request = Net::HTTP::Post.new(url.path)
-        request.add_field('Authorization','Bearer ' + token.to_s)
-        request.add_field('Content-Type', 'application/json')
-        json = {"to" => [],
-                "from" => {"phoneNumber" => ENV['RINGCENTRAL_LOGIN']},
-                "text" => params[:message]}
+          request = Net::HTTP::Post.new(url.path)
+          request.add_field('Authorization','Bearer ' + token.to_s)
+          request.add_field('Content-Type', 'application/json')
+          json = {"to" => [],
+                  "from" => {"phoneNumber" => ENV['RINGCENTRAL_LOGIN']},
+                  "text" => params[:message]}
 
-        json["to"].push({ "phoneNumber" => "1" + cargiver.phone_number.to_s})
-        response = http.request(request, json.to_json)
-        puts response
-        # if response.status != 200
-        #   raise "invalid request"
-        # end
+          json["to"].push({ "phoneNumber" => "1" + cargiver.phone_number.to_s})
+          response = http.request(request, json.to_json)
+          if response.code != 200
+            return false
+          else
+            return true
+          end
+        end
       end
+    else
+      return false
     end
-
 
   end
 
