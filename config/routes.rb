@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   get 'sessions/new'
 
 root "users#new"
-post 'api/lookup'
-post 'api/service'
+get 'api/lookup'
+get 'api/service'
 get 'users/new'
 post 'users', to: "users#create"
 get 'users/edit/:id', to: 'users#edit', as: 'user'
-post 'api/regcode'
+get 'api/regcode'
 
 get    'login'   => 'sessions#new'
 post   'login'   => 'sessions#create'

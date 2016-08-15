@@ -53,7 +53,7 @@ class ApiController < ApplicationController
  end
 
 
-  # get
+  # post
   # api/service
   # params device_id , requested_service
   # returns success
@@ -87,9 +87,9 @@ class ApiController < ApplicationController
 
   private
 
-  def request_params
-    params.require(:request).permit(:device_id , :requested_service)
-  end
+  # def request_params
+  #   params.require(:request).permit(:device_id , :requested_service)
+  # end
 
   def generate_code(number)
     charset =  Array('a'..'z')
