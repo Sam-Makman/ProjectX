@@ -97,29 +97,39 @@ class ApiController < ApplicationController
   end
 
   def get_token
-    url = URI.parse(ENV['RINGCENTRAL_PATH'] + '/restapi/oauth/token')
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true
+    @token = Oauth.first
+    if !@token || @token.expiration_time > Time.now
+      url = URI.parse(ENV['RINGCENTRAL_PATH'] + '/restapi/oauth/token')
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
 
-    request = Net::HTTP::Post.new(url.path)
+      request = Net::HTTP::Post.new(url.path)
 
-    data = {
-      grant_type: 'password',
-      username: ENV['RINGCENTRAL_LOGIN'],
-      password: ENV['RINGCENTRAL_PASSWORD'],
-      extension: '101',
-      refresh_token_ttl: '-1'
-      }
-    request.add_field('Authorization', 'Basic ' + ENV['RINGCENTRAL_SECRET'])
-    request.add_field('Content-Type','application/x-www-form-urlencoded;charset=UTF-8')
+      data = {
+        grant_type: 'password',
+        username: ENV['RINGCENTRAL_LOGIN'],
+        password: ENV['RINGCENTRAL_PASSWORD'],
+        extension: '101',
+        refresh_token_ttl: '-1'
+        }
+      request.add_field('Authorization', 'Basic ' + ENV['RINGCENTRAL_SECRET'])
+      request.add_field('Content-Type','application/x-www-form-urlencoded;charset=UTF-8')
 
-    response = http.request(request, data.to_json)
-    if response.code == 200
-      return body['access_token']
+      response = http.request(request, data.to_json)
+      if response.code == 200
+        if @token
+          @token.update(token: body['access_token'])
+          @token.update(expiration_time: Time.now + 1.hour)
+        else
+          @token = Oauth.create(token: body['access_token'], expiration_time: Time.now + 1.hour, name: 'RingCentral')
+        end
+        return body['access_token']
+      else
+        return false
+      end
     else
-      return false
+      return @token.token
     end
-
   end
 
   def send_message
