@@ -161,9 +161,25 @@ class ApiController < ApplicationController
           request = Net::HTTP::Post.new(url.path)
           request.add_field('Authorization','Bearer ' + token.to_s)
           request.add_field('Content-Type', 'application/json')
+
+          @message = @user.first_name + ' ' + @user.last_name + ' has requested help by invoking the Amazon Echo Application “Call For Help”'
+          @message = @message + ' Please check on ' +  @user.title + ' ' + @user.last_name + ', send help, or call 911. '
+
+          if params[:message]
+            @message = @message +  " "+ @user.title + ' ' + @user.last_name + " made the following statement: " + params[:message]
+          end
+
+          if @user.home_phone
+            @message = @message + "\n Home: " + @user.home_phone
+          end
+
+          if @user.cell_phone
+            @message = @message + "\n Cell: " + @user.cell_phone
+
+          end
           json = {"to" => [],
                   "from" => {"phoneNumber" => ENV['RINGCENTRAL_LOGIN']},
-                  "text" => params[:message]}
+                  "text" => @message}
 
           json["to"].push({ "phoneNumber" => "1" + cargiver.phone_number.to_s})
           response = http.request(request, json.to_json)
