@@ -62,9 +62,8 @@ private
   end
 
   def correct_user
-    if current_user.id != params[:id]
-      redirect_to root_url
-    end
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless @user == current_user
   end
 
 end
