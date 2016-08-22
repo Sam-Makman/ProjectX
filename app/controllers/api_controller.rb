@@ -186,10 +186,11 @@ class ApiController < ApplicationController
           puts response.body
           if response.code != '200'
             return false
-          else
-            return true
+          # else
+          #   return true
           end
         end
+        return true
       end
     else
       return false
