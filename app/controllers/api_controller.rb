@@ -67,6 +67,7 @@ class ApiController < ApplicationController
             render :json => {sucess: 'false' ,
                               message: 'no careivers registered'}
       elsif @request
+
           success = send_message
           if success
             render :json => {sucess: 'true' ,
@@ -98,7 +99,7 @@ class ApiController < ApplicationController
 
   def get_token
     @token = Oauth.first
-    if !@token || @token.expiration_time > Time.now
+    if !@token || @token.expiration_time < Time.now
       url = URI.parse(ENV['RINGCENTRAL_PATH'] + '/restapi/oauth/token')
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
@@ -145,6 +146,7 @@ class ApiController < ApplicationController
     end
   end
 
+  #needs to return json with better error reporting
   def send_message
     token = get_token
     puts "token = "
