@@ -68,18 +68,19 @@ class ApiController < ApplicationController
                               message: 'no careivers registered'}
       elsif @request
 
-          success = send_message
+          success, res = send_message
           if success
             render :json => {sucess: 'true' ,
                               message: 'request processed'}
           else
             render :json => {sucess: 'false' ,
-                              message: 'message failed to send'}
+                              message: 'API Error',
+                              body: res}
           end
 
       else
           render :json => {sucess: 'false' ,
-                            error: 'request failed'}
+                            error: 'Internal Server Error'}
       end
     else
       regcode
@@ -122,6 +123,7 @@ class ApiController < ApplicationController
       puts response.body
       puts "END HTTP RESPONSE \n"
       puts response.code
+      #all possible resposnses
       if response.code == '200'
         body = JSON.parse response.body
         puts "response success"
@@ -187,12 +189,17 @@ class ApiController < ApplicationController
           response = http.request(request, json.to_json)
           puts response.body
           if response.code != '200'
-            return false
+            #Server Error
+            #this error code needs to be pushed forward
+            puts response.body
+            return false, response.body
           end
         end
+        #everthing works
         return true
       end
     else
+      #User Does Not Exist
       return false
     end
   end
