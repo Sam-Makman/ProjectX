@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  # before_action :check_token, only: [:service, :lookup, :regcode]
 
  # get
  # /api/lookup
@@ -118,30 +119,21 @@ class ApiController < ApplicationController
       request.add_field('Content-Type','application/x-www-form-urlencoded;charset=UTF-8')
 
       response = http.request(request, URI.encode_www_form(data))
-      puts "HTTP RESONSE \n"
-      puts response.body
-      puts "END HTTP RESPONSE \n"
-      puts response.code
+
       if response.code == '200'
         body = JSON.parse response.body
-        puts "response success"
-        puts response.body
         if @token
-          puts "token updated"
           @token.update(token: body['access_token'])
           @token.update(expiration_time: Time.now + 1.hour)
         else
           "New Token Created"
           @token = Oauth.create(token: body['access_token'], expiration_time: Time.now + 1.hour, name: 'RingCentral')
         end
-        puts "return token"
         return body['access_token']
       else
-        puts "failed"
         return false
       end
     else
-      puts "token in database"
       return @token.token
     end
   end
@@ -185,8 +177,8 @@ class ApiController < ApplicationController
 
           json["to"].push({ "phoneNumber" => "1" + cargiver.phone_number.to_s})
           response = http.request(request, json.to_json)
-          puts response.body
           if response.code != '200'
+            puts response.body
             return false
           end
         end
@@ -196,5 +188,9 @@ class ApiController < ApplicationController
       return false
     end
   end
+
+  # def check_token
+  #     redirect_to(root_url) unless params[:token] == ENV['API_TOKEN']
+  # end
 
 end
