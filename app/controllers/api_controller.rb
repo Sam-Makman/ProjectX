@@ -149,8 +149,8 @@ class ApiController < ApplicationController
   #needs to return json with better error reporting
   def send_message
     token = get_token
-    puts "token = "
-    puts  token
+    # puts "token = " + token.to_s
+    # puts  token
     if token
       url = URI.parse(ENV['RINGCENTRAL_PATH'] + '/restapi/v1.0/account/~/extension/~/sms')
 
@@ -188,8 +188,6 @@ class ApiController < ApplicationController
           puts response.body
           if response.code != '200'
             return false
-          # else
-          #   return true
           end
         end
         return true
@@ -197,7 +195,6 @@ class ApiController < ApplicationController
     else
       return false
     end
-
   end
 
 end
