@@ -15,7 +15,7 @@ class ApiController < ApplicationController
     end
   end
 
-  # get
+  # getpan
   # /api/unregistered
   # params device_id
   # returns unique_id
@@ -177,7 +177,14 @@ class ApiController < ApplicationController
 
           json["to"].push({ "phoneNumber" => "1" + cargiver.phone_number.to_s})
           response = http.request(request, json.to_json)
+
+            puts "MESSAGE RESPONSE"
+            body = JSON.parse response.body
+            puts body['messageStatus']
+            puts Time.now
+
           if response.code != '200'
+            puts "MESSAGE RESPONSE"
             puts response.body
             return false
           end
@@ -190,6 +197,7 @@ class ApiController < ApplicationController
   end
 
   # def check_token
+  #   # puts "Api token = " + ENV['API_TOKEN']
   #     redirect_to(root_url) unless params[:token] == ENV['API_TOKEN']
   # end
 
